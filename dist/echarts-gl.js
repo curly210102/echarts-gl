@@ -49436,6 +49436,7 @@ Geo3DBuilder.prototype = {
 
         polygonMesh.on('mousemove', this._onmousemove, this);
         polygonMesh.on('mouseout', this._onmouseout, this);
+        polygonMesh.on('mousedown', this._onmousedown, this);
     },
 
     _updateDebugWireframe: function (componentModel) {
@@ -49457,6 +49458,15 @@ Geo3DBuilder.prototype = {
             mesh.material.set('wireframeLineColor', color);
             mesh.material.set('wireframeLineWidth', width);
         }
+    },
+
+    _onmousedown: function (e) {
+        var dataIndex = this._dataIndexOfVertex[e.triangle[0]];
+        if (dataIndex == null) {
+            dataIndex = -1;
+        }
+        this._lastHoverDataIndex = dataIndex;
+        this._polygonMesh.dataIndex = dataIndex;
     },
 
     _onmousemove: function (e) {
